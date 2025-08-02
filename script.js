@@ -16,7 +16,10 @@ buttons.forEach(button => {
       expressionInput.value += lastAnswer;
     } else if (val === 'ENTER') {
       try {
-        let expr = expressionInput.value.replace(/√/g, 'Math.sqrt');
+        let expr = expressionInput.value
+          .replace(/√(\d+(\.\d+)?)/g, 'Math.sqrt($1)')  // Fix sqrt
+          .replace(/%/g, '/100');                      // Fix percent
+
         let result = eval(expr);
         resultDisplay.textContent = result;
         lastAnswer = result;
